@@ -1,93 +1,88 @@
 #include <bits/stdc++.h> 
-
-using namespace std; 
+#define input freopen("in.txt", "r", stdin)
+#define output freopen("out.txt", "w", stdout)
+using namespace std;
 
 struct node {
-    char currentCharacter;       
-    bool isWord;
-   //  int priority = 0;            
-    struct node *children[27];  // [null,null,null,......,null]
-    node() {
-        isWord = false;
-    }
-}*trie; 
+    int contador = 0;
+    char caracter;
+    bool finDePalabra = false;
+    struct node *hijos[27];
+}*trie;
 
-// Inicializar 
 
 void init() {
-    trie = new node();  // Instanciar el objeto trie
+    trie = new node();
+    trie->finDePalabra = false;
+    trie->contador = 0;
 }
 
-void insertWord(string word) {   // alba 
-    node *currentNode =  trie;  
-    for (int i = 0; i< word.length(); i++) { // alba
-        int character = word[i] - 'a';       // i = 0 'a'-'a' = 0
-        if(currentNode->children[character] == NULL ) {
-            currentNode->children[character] = new node();
-           // currentNode->isWord = false;
+void insertarPalabra(string palabra) {
+    node *currentNode = trie;
+    for(int i = 0; i < palabra.length(); i++) {
+        int caracter = palabra[i] - 'a';
+        if(currentNode->hijos[caracter]==NULL) {
+            currentNode -> hijos[caracter] = new node();
+            currentNode -> hijos[caracter] -> contador = 0;
         }
-      //   currentNode = max(currentNode->priority,priority);
-        currentNode = currentNode->children[character];
-        currentNode->currentCharacter = word[i];
+        currentNode = currentNode->hijos[caracter];
+        currentNode->caracter = palabra[i];
+        currentNode->contador++;
     }
-    currentNode->isWord = true;
+    currentNode->finDePalabra = true;
 }
 
-bool searchWord(string word) {   // alto 
-    node *currentNode =  trie;  
-    for (int i = 0; i< word.length(); i++) {
-        int character = word[i] - 'a';       // i = 0 'a'-'a' = 0
-        if(currentNode->children[character] == NULL ) {
-           return false;
+
+bool buscar(string palabra) {
+    node *currentNode  = trie;
+    for(int i = 0; i < palabra.length(); i++) {
+        int caracter = palabra[i] - 'a';
+        if(currentNode->hijos[caracter]==NULL) {
+            return false;
         }
-        currentNode = currentNode->children[character];
+        currentNode = currentNode->hijos[caracter];
     }
-    cout<<currentNode->currentCharacter<<endl;
-    return currentNode->isWord;
+    return currentNode->finDePalabra;
 }
 
 
-/*
-int findWords(string prefix) {   // alto 
-    node *currentNode =  trie;  
-    for (int i = 0; i< prefix.length(); i++) {
-        int character = prefix[i] - 'a';       // i = 0 'a'-'a' = 0
-        if(currentNode->children[character] == NULL ) {
+int palabrasConElMismoPrefijo(string prefijo) {
+    node *currentNode =  trie;
+    for (int i = 0; i< prefijo.length(); i++) {
+        int caracter = prefijo[i] - 'a';  
+        if(currentNode->hijos[caracter] == NULL ) {
            return 0;
         }
-        currentNode = currentNode->children[character];
+        currentNode = currentNode->hijos[caracter];
     }
-    return currentNode->countWords;
-}*/
-/*
-void showTrie(node currentNode ) {
-    node *currentNode =  trie;  
-    for (int i =0; i< 27; i++) {
-        currentNode = currentCharacter = word[i];
-        cout (char(i+'a'));
-        showTrie(currentNode)
-    }
-}*/ 
-
-
-void isThereWord(string word) {
-    if(searchWord(word)) {
-        cout<<"si existe : "<<word<<" en el trie"<<endl;
-    } else {
-        cout<<"No Existe :P"<<endl;
-    }
+    return currentNode->contador;
 }
 
-int main() {
 
-    // Inicializar Trie
-    init();  
-    string word = "auto";
-    insertWord(word);
-    isThereWord(word);
-    word = "automovil";   
-    insertWord(word);
-    isThereWord("auto");
-    isThereWord(word);
-    return 0;
+void borrar(string palabra) {
+    node *currentNode = trie;
+    for(int i = 0; i < palabra.size(); i++) {
+        int caracter = palabra[i] - 'a';
+        if(currentNode->hijos[caracter] == NULL) { 
+            return;
+        }
+        currentNode = currentNode->hijos[caracter];
+    }
+    currentNode->finDePalabra = false;
+}
+
+
+bool tieneHijos(node* node) {
+    for(int i = 0; i<26; i++) {
+        if(node->hijos[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+int main(){
+    init();
+    
 }

@@ -6,7 +6,7 @@ int numberOfNodes = 0;
 struct node
 {
     map<char, node*> mapero;
-    bool isWord = false;                
+    bool finDePalabra = false;                
 } *trie;
 
 void init()
@@ -27,13 +27,13 @@ void insertWord(string word)
         }
         currentNode = currentNode->mapero[word[i]];
     }
-    currentNode->isWord=true;
+    currentNode->finDePalabra=true;
 }
 
 string findPrefixCommon(){
     node *currentNode = trie;
     string prefix = "";
-    while(currentNode->mapero.size() == 1 && !currentNode->isWord){
+    while(currentNode->mapero.size() == 1 && !currentNode->finDePalabra){
         prefix += currentNode->mapero.begin()->first;
         currentNode = currentNode->mapero.begin()->second;
     }

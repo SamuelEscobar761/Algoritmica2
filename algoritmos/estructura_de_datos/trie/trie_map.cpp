@@ -6,13 +6,13 @@ int numberOfNodes = 0;
 struct node
 {
     map<char, node*> mapero;
-    bool isWord;                
+    bool finDePalabra;                
 } *trie;
 
 void init()
 {
     trie = new node();
-    trie->isWord = false;
+    trie->finDePalabra = false;
     numberOfNodes++;
 }
 
@@ -30,7 +30,7 @@ void insertWord(string word)
         }
         currentNode = currentNode->mapero[word[i]];
     }
-    currentNode->isWord=true;
+    currentNode->finDePalabra=true;
     cout<<"Se insertó la palabra "<<word<<endl;
 }
 

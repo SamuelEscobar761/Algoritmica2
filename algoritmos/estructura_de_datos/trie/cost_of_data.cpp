@@ -3,9 +3,9 @@
 using namespace std; 
 int numberOfNodes = 0;
 struct node {
-    char currentCharacter;       
-    bool isWord = false;                
-    struct node *children[27];  // [null,null,null,......,null]
+    char caracter;       
+    bool finDePalabra = false;                
+    struct node *hijos[27];  // [null,null,null,......,null]
 }*trie; 
 
 // Inicializar 
@@ -19,14 +19,14 @@ void insertWord(string word) {   // alba
     node *currentNode =  trie;  
     for (int i = 0; i< word.length(); i++) { // alba
         int character = word[i] - 'a';       // i = 0 'a'-'a' = 0
-        if(currentNode->children[character] == NULL ) {
-            currentNode->children[character] = new node();
+        if(currentNode->hijos[character] == NULL ) {
+            currentNode->hijos[character] = new node();
             numberOfNodes++;
         }
-        currentNode = currentNode->children[character];
-        currentNode->currentCharacter = word[i];
+        currentNode = currentNode->hijos[character];
+        currentNode->caracter = word[i];
     }
-    currentNode->isWord = true;
+    currentNode->finDePalabra = true;
 }
 
 int main() { 
