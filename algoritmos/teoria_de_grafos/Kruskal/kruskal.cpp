@@ -9,6 +9,7 @@ using namespace std;
 // parent y rango sirven para el union find 
 int parent[MAX_N];
 int rango[MAX_N];
+int contador[MAX_N];
 
 int n, m; // n numero de nodos y m numero de aristas 
 
@@ -103,13 +104,18 @@ int main(){
     input;
     while(scanf("%d %d",&n,&m) != EOF) {
         for(int i=0; i<m; i++) {
-            scanf("%d %d %lf",&aristas[i].origen,&aristas[i].destino,&aristas[i].peso);
+            scanf("%d %d",&aristas[i].origen,&aristas[i].destino);
+            aristas[i].peso = 1;
         }
-        printf("%.2lf\n",kruskal(n,m));
+        double resultado = kruskal(n, m);
         // Imprimo el arbol de expasion minimo
         for(int i = 0 ;i <numAristasArbol;i++) {
-            cout<<MST[i].origen<<" "<<MST[i].destino<<" "<<MST[i].peso<<endl;
+            contador[MST[i].origen] += 1;
+            if(contador[MST[i].origen] > 3){
+                resultado--;
+            }
         }
+        cout << resultado << endl;
     }
 
     return 0;

@@ -16,8 +16,11 @@
 #include <set>
 #include <map>
 #include <complex>
-#define MAX_N 500
+#define MAX_N 1000000
 #define INF 987654321
+#include <bits/stdc++.h> 
+#define input freopen("in.txt", "r", stdin)
+#define output freopen("out.txt", "w", stdout)
 using namespace std;
 typedef long long lld;
 
@@ -29,7 +32,8 @@ Node graf[MAX_N];
 
 struct Edge
 {
-    int u, v, cap;
+    int u, v;
+    int cap = 0;
     int flow;
 };
 vector<Edge> E;
@@ -115,8 +119,8 @@ inline void addEdge(int u, int v, int cap)
 {
     Edge E1, E2;
     
-    E1.u = u, E1.v = v, E1.cap = cap, E1.flow = 0;
-    E2.u = v, E2.v = u, E2.cap = 0, E2.flow = 0;
+    E1.u = u, E1.v = v, E1.cap += cap, E1.flow = 0;
+    E2.u = v, E2.v = u, E2.cap += cap, E2.flow = 0;
     
     graf[u].adj.push_back(idd++);
     E.push_back(E1);
@@ -126,16 +130,21 @@ inline void addEdge(int u, int v, int cap)
 
 int main()
 {
-    v = 4, e = 5;
-    s = 1, t = 4;
-    
-    addEdge(1, 2, 40);
-    addEdge(1, 4, 20);
-    addEdge(2, 4, 20);
-    addEdge(2, 3, 30);
-    addEdge(3, 4, 10);
-    
-    printf("%d\n",Dinic());
-    
+    input;
+    int contador = 1;
+    while(cin >> v && v != 0)
+    {
+        printf("Network %d\n", contador);
+        cin >> s >> t >> e;
+        e *= 2;
+        for(int i = 0; i < e; i++)
+        {
+        int ini, fin, flujo;
+        cin >> ini >> fin >> flujo;
+        addEdge(ini, fin, flujo);
+        }
+        printf("The bandwidth is %d.\n",Dinic());
+        contador++;
+    }
     return 0;
 }

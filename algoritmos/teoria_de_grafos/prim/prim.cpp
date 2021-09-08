@@ -4,8 +4,8 @@
 using namespace std; 
  
 // Numero de vertices en el grafo
-#define V 7
-int vertices = 100000;
+#define V 999
+int vertices = 999;
  
 // Encontrar el vertice con menor peso de arista
 int pesoMinimo(int key[], bool mstSet[])
@@ -70,6 +70,7 @@ int main()
     int numeroAristas;
     int graph[V][V];
     cin >> vertices >> numeroAristas;
+    vertices = 999;
 
     for(int i = 0; i < V; i++){
         for(int j = 0; j < V; j++){
@@ -78,9 +79,9 @@ int main()
     }
     
     for(int i = 0; i < numeroAristas; i++){
-        int origen, destino, peso;
-        cin >> origen >> destino >> peso;
-        graph[origen][destino] = peso;
+        int origen, destino;
+        cin >> origen >> destino;
+        graph[origen][destino] += 1;
     }
  
     // Print the solution
