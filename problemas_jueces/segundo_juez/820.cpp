@@ -100,7 +100,7 @@ inline int DFS(int xt, int minCap)
 
 inline int Dinic()
 {
-    int flow = 0;
+    long long flow = 0;
     while (true)
     {
         if (!BFS()) break;
@@ -119,8 +119,10 @@ inline void addEdge(int u, int v, int cap)
 {
     Edge E1, E2;
     
-    E1.u = u, E1.v = v, E1.cap += cap, E1.flow = 0;
-    E2.u = v, E2.v = u, E2.cap += cap, E2.flow = 0;
+    E1.u = u, E1.v = v, E1.cap = cap, E1.flow = 0;
+    E2.u = v, E2.v = u, E2.cap = cap, E2.flow = 0;
+    if((u == 55 && v== 41) || (u == 55 && v == 55)){
+    }
     
     graf[u].adj.push_back(idd++);
     E.push_back(E1);
@@ -132,18 +134,23 @@ int main()
 {
     input;
     int contador = 1;
+    int casos;
     while(cin >> v && v != 0)
     {
+        for(int i = 0; i < MAX_N; i++){
+            Node newNode;
+            graf[i] = newNode;
+        }
+        int casos;
         printf("Network %d\n", contador);
-        cin >> s >> t >> e;
-        e *= 2;
-        for(int i = 0; i < e; i++)
+        cin >> s >> t >> casos;
+        for(int i = 0; i < casos; i++)
         {
         int ini, fin, flujo;
         cin >> ini >> fin >> flujo;
         addEdge(ini, fin, flujo);
         }
-        printf("The bandwidth is %d.\n",Dinic());
+        printf("The bandwidth is %d.\n\n",Dinic());
         contador++;
     }
     return 0;
